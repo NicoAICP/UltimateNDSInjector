@@ -1,5 +1,9 @@
 @echo off
-set CurrentVersion=1
+set CurrentVersion=1.1
+echo Checking Internet Connection...
+C:\windows\system32\PING.EXE google.com
+if %errorlevel% GTR 0 goto Head
+cls
 cd TOOLS
 cd Updater
 wget -q --no-check-certificate https://www.dropbox.com/s/iy9x80yjdma21yh/NDSVERSION.txt
@@ -38,42 +42,61 @@ echo (4) The Legend of Zelda: Phantom Hourglass
 set /p BR=Enter the number behind the baserom: 
 
 ::::::::::BASE ROM REGION::::::::::
-if %BR%==1 goto regionaskww
-if %BR%==2 goto regionaskml
-if %BR%==3 goto regionasknsmb
-if %BR%==4 goto regionaskzw
-:regionaskww
+if %BR%==1 (
+cls
+goto ww
+)
+if %BR%==2 (
+cls
+goto ml
+)
+if %BR%==3 (
+cls
+goto mb
+)
+if %BR%==4 (
+cls
+goto zh
+)
+:ww
 echo What region do you want to use
 echo (1) EU
 echo (2) US
-set /p BRWW=Enter the number which is infront of the region: >con
-goto tkstuffww
-:regionaskml
+set /p Test=Enter the number which is infront of the region: >con
+If %Test%==1 set BR=5
+If %Test%==2 set BR=6
+goto tkstuff
+:ml
 echo What region do you want to use
 echo (1) EU
 echo (2) US
-set /p BRML=Enter the number which is infront of the region: >con
-goto tkstuffml
-:regionasknsmb
+set /p Test=Enter the number which is infront of the region: >con
+If %Test%==1 set BR=7
+If %Test%==2 set BR=8
+goto tkstuff
+:mb
 echo What region do you want to use
 echo (1) EU
 echo (2) US
-set /p BRMB=Enter the number which is infront of the region: >con
-goto tkstuffmb
-:regionaskzw
+set /p Test=Enter the number which is infront of the region: >con
+If %Test%==1 set BR=9
+If %Test%==2 set BR=10
+goto tkstuff
+:zh
 echo What region do you want to use
 echo (1) EU
 echo (2) US
-set /p BRZW=Enter the number which is infront of the region: >con
-goto tkstuffzh
-
+set /p Test=Enter the number which is infront of the region: >con
+If %Test%==1 set BR=11
+If %Test%==2 set BR=12
+goto tkstuff
 :::::::::::::KEYSTUFF:::::::::::::
 
 ::::::TILEKEY STUFF::::::
 
 ::WARIOWARE EUR::
-:tkstuffww
-if %BRWW%==1 (
+:tkstuff
+if %BR%==5 (
 set TKHINT=1337
 set TID=00050000101a2000
 set TIKPATH=TOOLS\Storage\WWEUTITLEKEY
@@ -84,7 +107,7 @@ goto tk
 )
 
 ::WARIOWARE US::
-IF %BRWW%==2 (
+IF %BR%==6 (
 set TKHINT=efaa
 set TID=00050000101a1f00
 set TIKPATH=TOOLS\Storage\WWUSTITLEKEY
@@ -95,8 +118,8 @@ goto tk
 )
 
 ::Mario & Luigi US::
-:tkstuffml
-if %BRML%==1 (
+
+if %BR%==7 (
 set TKHINT=1a51
 set TID=00050000101a2200
 set TIKPATH=TOOLS\Storage\MLUSTITLEKEY
@@ -107,7 +130,7 @@ goto tk
 )
 
 ::Mario & Luigi US::
-IF %BRML%==2 (
+IF %BR%==8 (
 set TKHINT=095a
 set TID=00050000101a2300
 set TIKPATH=TOOLS\Storage\MLEUTITLEKEY
@@ -118,8 +141,8 @@ goto tk
 )
 
 ::NSMB EUR::
-:tkstuffmb
-if %BRMB%==1 (
+
+if %BR%==9 (
 set TKHINT=54b4
 set TID=0005000010195b00
 set TIKPATH=TOOLS\Storage\MBEUTITLEKEY
@@ -130,7 +153,7 @@ goto tk
 )
 
 ::NSMB US::
-IF %BRMB%==2 (
+IF %BR%==10 (
 
 set TKHINT=9fe3
 set TID=0005000010195a00
@@ -142,8 +165,8 @@ goto tk
 )
 
 ::ZELDA HOURGLASS EUR::
-:tkstuffzh
-if %BRZH%==1 (
+
+if %BR%==11 (
 
 set TKHINT=1337
 set TID=00050000101a2000
@@ -155,7 +178,7 @@ goto tk
 )
 
 ::ZELDA HOURGLASS US::
-IF %BRZH%==2 (
+IF %BR%==12 (
 
 set TKHINT=efaa
 set TID=00050000101a1f00
@@ -173,7 +196,9 @@ IF NOT EXIST "%TIKPATH%" set /p TK=Enter or copypaste the eShop Title Key for %B
 IF NOT EXIST "%TIKPATH%" echo %TK:~0,32%>%TIKPATH%
 set /p TK=<%TIKPATH%
 cls
-goto ckey
+echo done
+pause
+exit
 :wtk
 cls
 del %TIKPATH%
@@ -438,5 +463,10 @@ pause
 goto fin
 :fin 
 echo have fun with your game!
+pause
+exit
+:netfail
+cls
+echo Your PC is not connected to the Internet, Aborting!
 pause
 exit
