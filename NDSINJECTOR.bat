@@ -1,5 +1,5 @@
 @echo off
-set CurrentVersion=1.1
+set CurrentVersion=2
 echo Checking Internet Connection...
 C:\windows\system32\PING.EXE google.com
 if %errorlevel% GTR 0 goto Head
