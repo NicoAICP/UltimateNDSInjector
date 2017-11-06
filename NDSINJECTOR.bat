@@ -1,5 +1,5 @@
 @echo off
-set CurrentVersion=2
+set CurrentVersion=3
 echo Checking Internet Connection...
 C:\windows\system32\PING.EXE google.com
 if %errorlevel% GTR 0 goto Head
@@ -168,24 +168,24 @@ goto tk
 
 if %BR%==11 (
 
-set TKHINT=1337
-set TID=00050000101a2000
+set TKHINT=5069
+set TID=00050000101c3800
 set TIKPATH=TOOLS\Storage\ZHEUTITLEKEY
-set BRTITLE=Wario Ware: Touched! [EUR]
-set DWNLDFOLDER=WarioWare Touched! [DAGP01]
-set SRLNAME=WUP-N-DAGP
+set BRTITLE=The Legend of Zelda: Phantom Hourglass [EU]
+set DWNLDFOLDER=The Legend of Zelda Phantom Hourglass [DATP01]
+set SRLNAME=WUP-N-DATP
 goto tk
 )
 
 ::ZELDA HOURGLASS US::
 IF %BR%==12 (
 
-set TKHINT=efaa
-set TID=00050000101a1f00
+set TKHINT=2de3
+set TID=00050000101c3700
 set TIKPATH=TOOLS\Storage\ZHUSTITLEKEY
-set BRTITLE=Wario Ware: Touched! [USA]
-set DWNLDFOLDER=WarioWare Touched! [DAGE01]
-set SRLNAME=WUP-N-DAGE
+set BRTITLE=The Legend of Zelda: Phantom Hourglass [US]
+set DWNLDFOLDER=The Legend of Zelda Phantom Hourglass [DATE01]
+set SRLNAME=WUP-N-DATE
 goto tk
 )
 
@@ -196,9 +196,6 @@ IF NOT EXIST "%TIKPATH%" set /p TK=Enter or copypaste the eShop Title Key for %B
 IF NOT EXIST "%TIKPATH%" echo %TK:~0,32%>%TIKPATH%
 set /p TK=<%TIKPATH%
 cls
-echo done
-pause
-exit
 :wtk
 cls
 del %TIKPATH%
